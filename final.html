@@ -1,0 +1,129 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Flow | Smart Expense Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="final.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Family Flow 👨‍👩‍👧‍👦</h1>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs glass">
+            <button class="tab-btn active" onclick="switchTab('dashboard')">Dashboard</button>
+            <button class="tab-btn" onclick="switchTab('add')">Add</button>
+            <button class="tab-btn" onclick="switchTab('analytics')">Analytics</button>
+            <button class="tab-btn" onclick="switchTab('tips')">Tips</button>
+            <button class="tab-btn" onclick="switchTab('settings')">Settings</button>
+        </nav>
+
+        <!-- Tab 1: Dashboard -->
+        <div id="tab-dashboard" class="tab-content active">
+            <div class="stats-grid">
+                <div class="glass stat-card"><div class="stat-title" id="balanceTitle">Household Balance</div><div class="stat-value balance" id="totalBalance">₹0.00</div></div>
+                <div class="glass stat-card"><div class="stat-title" id="incomeTitle">Total Income</div><div class="stat-value income" id="totalIncome">₹0.00</div></div>
+                <div class="glass stat-card"><div class="stat-title" id="expenseTitle">Total Expenses</div><div class="stat-value expense" id="totalExpense">₹0.00</div></div>
+            </div>
+            <div class="glass" style="margin-top: 1.5rem;">
+                <h3 class="section-title">Recent Activity</h3>
+                <ul class="transaction-list" id="transactionList"></ul>
+            </div>
+        </div>
+
+        <!-- Tab 2: Add Record -->
+        <div id="tab-add" class="tab-content">
+            <div class="glass">
+                <h3 class="section-title">Add Transaction</h3>
+                <form id="transactionForm">
+                    <div class="form-group"><label>Title</label><input type="text" id="titleInput" placeholder="e.g. Weekly Groceries" required=""></div>
+                    <div class="form-group"><label>Amount (₹)</label><input type="number" id="amountInput" placeholder="0.00" step="0.01" required="" min="0.01"></div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group"><label>Type</label>
+                            <select id="typeInput"><option value="expense">Expense</option><option value="income">Income</option></select>
+                        </div>
+                        <div class="form-group"><label>Category</label>
+                            <select id="categoryInput"><option value="🍔 Food">🍔 Food</option><option value="⚡ Bills">⚡ Bills</option><option value="🚗 Transport">🚗 Transport</option><option value="🛒 Shopping">🛒 Shopping</option><option value="🎮 Entertainment">🎮 Entertainment</option><option value="💰 Salary">💰 Salary</option><option value="🩺 Health">🩺 Health</option><option value="✨ Other">✨ Other</option></select>
+                        </div>
+                    </div>
+                    <div class="form-group"><label>Family Member</label><input type="text" id="memberInput" placeholder="e.g. Dad, Mom, Alex" required=""></div>
+                    <button type="submit" class="btn-submit">Add Record</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tab 3: Analytics -->
+        <div id="tab-analytics" class="tab-content">
+            <div class="glass">
+                <h3 class="section-title" id="breakdownTitle">Member Breakdown</h3>
+                <div class="chart-container"><canvas id="memberChart"></canvas></div>
+                <ul class="member-breakdown" id="memberBreakdownList"></ul>
+            </div>
+        </div>
+
+        <!-- Tab 4: Tips -->
+        <div id="tab-tips" class="tab-content">
+            <div class="glass" style="margin-bottom: 1.5rem; text-align: center;">
+                <h3 class="section-title" style="border: none; margin-bottom: 0; padding-bottom: 0;">Savings Insight</h3>
+                <div class="stat-value" id="savingsPercent" style="color: var(--success); font-size: 3.5rem;">0%</div>
+                <p style="color: var(--text-muted); font-weight: 500;">of income saved</p>
+            </div>
+            <div class="glass tip-container" id="tipContainer"><div id="tipText">Loading financial tip...</div></div>
+        </div>
+        <!-- ================= MONEYMUNCHKIN CHATBOT ================= -->
+<div class="chatbot-container">
+
+    <!-- Floating Chat Button -->
+    <button id="chatToggle" class="chat-toggle">
+        💬
+    </button>
+
+    <!-- Chat Window -->
+    <div class="chat-window" id="chatWindow">
+
+        <!-- Header -->
+        <div class="chat-header">
+            <h3>🤖 MoneyMunchkin</h3>
+            <span id="closeChat">✖</span>
+        </div>
+
+        <!-- Messages -->
+        <div class="chat-body" id="chatBody">
+            <div class="bot-message">
+                👋 Hello! I'm MoneyMunchkin.<br>
+                Ask me about your balance, expenses, savings or budget.
+            </div>
+        </div>
+
+        <!-- Input -->
+        <div class="chat-footer">
+            <input type="text" id="chatInput" placeholder="Ask something...">
+            <button id="sendBtn">Send</button>
+        </div>
+
+    </div>
+
+</div>
+
+        <!-- Tab 5: Settings -->
+        <div id="tab-settings" class="tab-content">
+            <div class="glass" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <h3 class="section-title">Settings</h3>
+                <div class="form-group">
+                    <label>Dashboard View Filter</label>
+                    <select id="viewFilter" style="padding: 0.8rem 1rem; border-radius: 0.75rem; border: 1px solid var(--card-border); background: rgba(255,255,255,0.4); color: var(--text-main); font-weight: 600; outline: none; cursor: pointer; width: 100%;"><option value="all">All Family</option></select>
+                </div>
+                <div class="form-group">
+                    <label>App Theme</label>
+                    <button class="btn-submit" id="themeToggle" style="margin-top:0;">🌙 Switch to Dark Mode</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="final.js"></script>
+
+</body></html>
